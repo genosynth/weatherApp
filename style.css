@@ -1,6 +1,7 @@
 .info {
     display: flex;
     flex-direction: column;
+    padding: 2%;
 }
 
 footer {
@@ -19,6 +20,9 @@ body{
     color: whitesmoke;
     font-family: monospace;
     font-size: 22px;
+    text-align: center;
+    
+   
 }
 
 h1 {

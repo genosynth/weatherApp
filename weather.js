@@ -6,7 +6,7 @@ async function makeAPICall(location){
         displayWeather(getWeather);
     } catch(error){
         let div = document.querySelector("div");
-        div.innerHTML="Not Found! - Please try using the search engine according to the below instructions";
+        div.innerHTML="Not Found! - Please try using the search engine according to the below instructions.";
         
         console.log("fuck")
     }
@@ -19,6 +19,8 @@ let btn = document.querySelector("button");
 btn.addEventListener("click", function(){
     makeAPICall(document.getElementById("search-box").value)
 })
+
+
 //makeAPICall(x);
 
 function displayWeather(object){
@@ -64,7 +66,23 @@ function displayWeather(object){
     span4.innerText = "Wind - "+ wind+"km/h";
     div.appendChild(span4);
 
+    //getGiph(object.weather[0].description)
+    
+
   
 }
 
+async function getGiph(typeOfWeather){
+    const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=pXzNyyhA9UZS8TdFy9ZmqDwprcyRE79W&s=${typeOfWeather}`, {mode: 'cors'})
+    const getGiph = await response.json();
+    
+    let img=document.createElement("img");
+    img.src = getGiph.data.images.original.url;//accessing the object's properties fetched from giphy
+    img.style.width="400px";
+    img.style.height="300px";
+    
+    let div = document.querySelector("div");
+    div.appendChild(img);
+
+}
 //document.body.style.backgroundImage =`url("https://cdn.britannica.com/s:800x450,c:crop/23/204523-138-A67F2633/more-weather-climate.jpg")`
