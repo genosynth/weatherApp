@@ -50,29 +50,52 @@ function displayWeather(object){
    
 
     let span1 = document.createElement("span");
-    span1.innerText = "Weather Description - "+ object.weather[0].description
+    span1.innerText = "Weather Description : "+ object.weather[0].description
     div.appendChild(span1);
 
     let span2 = document.createElement("span");
-    span2.innerText = "Temperature - "+ object.main.temp+"°C";
+    span2.id = "temp";
+    span2.innerText = "Temperature : "+ object.main.temp+"°C";
+    span2.style.color="lightyellow";
+    
     div.appendChild(span2);
+    
+    
 
     let span3 = document.createElement("span");
-    span3.innerText = "Humidity - "+ object.main.humidity+"%";
+    span3.innerText = "Humidity : "+ object.main.humidity+"%";
     div.appendChild(span3);
 
     let span4 = document.createElement("span");
     let wind = ((object.wind.speed)*60*60)/1000
-    span4.innerText = "Wind - "+ wind+"km/h";
+    span4.innerText = "Wind : "+ wind+"km/h";
     div.appendChild(span4);
 
     //getGiph(object.weather[0].description)
-    
+    let toggleBtn = document.createElement("button");
+    toggleBtn.innerText = "Change Units";
+    toggleBtn.className = "btn btn-dark";
+   
+    toggleBtn.addEventListener("click", function(){
+        let spanTemp = document.getElementById("temp").innerText;
+        //console.log(spanTemp[(spanTemp.length-1)])
+            if (spanTemp[(spanTemp.length-1)]=="C"){
+            let celsius = object.main.temp;
+            let fahrenheit = Math.round(((celsius*9/5) + 32)*100)/100; // °F
+            document.getElementById("temp").style.color = "lightgreen";
+            document.getElementById("temp").innerText = `Temperature : ${fahrenheit}°F`
+            }
+            else {
+                document.getElementById("temp").innerText = `Temperature : ${object.main.temp}°C`;
+                document.getElementById("temp").style.color = "lightyellow";
+            }
+    })
+    div.appendChild(toggleBtn)
 
   
 }
 
-async function getGiph(typeOfWeather){
+async function getGiph(typeOfWeather){ //CURRENTLY NOT IN USE
     const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=pXzNyyhA9UZS8TdFy9ZmqDwprcyRE79W&s=${typeOfWeather}`, {mode: 'cors'})
     const getGiph = await response.json();
     
